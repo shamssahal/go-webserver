@@ -6,7 +6,16 @@ import (
 	"time"
 )
 
-const HeaderRequestID = "X-Request-ID"
+const (
+	HeaderRequestID = "X-Request-ID"
+	RequestTimeout  = 60 * time.Second
+
+	// CORS configuration
+	CORSAllowedOrigins = "*"
+	CORSAllowedMethods = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+	CORSAllowedHeaders = "Accept, Content-Type, Authorization, X-Request-ID"
+	CORSMaxAge         = 86400 // 24 hours in seconds
+)
 
 type HttpServerConfig struct {
 	Host         string
