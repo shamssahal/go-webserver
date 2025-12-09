@@ -1,6 +1,10 @@
 package config
 
-import "time"
+import (
+	"os"
+	"strconv"
+	"time"
+)
 
 const HeaderRequestID = "X-Request-ID"
 
@@ -10,14 +14,42 @@ type HttpServerConfig struct {
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 	IdleTimeout  time.Duration
+	Environment  string
 }
 
 func Get() HttpServerConfig {
 	return HttpServerConfig{
-		Host:         "localhost",
-		Port:         "3000",
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 15 * time.Second,
-		IdleTimeout:  60 * time.Second,
+		Host:         getEnv("SERVER_HOST", "localhost"),
+		Port:         getEnv("SERVER_PORT", "3000"),
+		ReadTimeout:  getEnv("SERVER_READ_TIMEOUT", 10*time.Second),
+		WriteTimeout: getEnv("SERVER_WRITE_TIMEOUT", 15*time.Second),
+		IdleTimeout:  getEnv("SERVER_IDLE_TIMEOUT", 60*time.Second),
+		Environment:  getEnv("APP_ENV", "development"),
 	}
+}
+
+// getEnv retrieves an environment variable or returns a default value
+// Supports string and time.Duration types
+func getEnv[T any](key string, defaultValue T) T {
+	value := os.Getenv(key)
+	if value == "" {
+		return defaultValue
+	}
+
+	var result any
+	switch any(defaultValue).(type) {
+	case string:
+		result = value
+	case time.Duration:
+		// For Duration, expect value in seconds as integer
+		if seconds, err := strconv.Atoi(value); err == nil {
+			result = time.Duration(seconds) * time.Second
+		} else {
+			return defaultValue
+		}
+	default:
+		return defaultValue
+	}
+
+	return result.(T)
 }

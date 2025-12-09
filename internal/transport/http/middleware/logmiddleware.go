@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"log"
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -39,17 +39,18 @@ func RequestLog(next http.Handler) http.Handler {
 		next.ServeHTTP(rec, r)
 
 		latency := time.Since(start)
-		// Very lightweight, structured-enough log line.
-		log.Printf(
-			`request_id=%s method=%s path=%q status=%d bytes=%d dur=%s remote=%s ua=%q`,
-			rid,
-			r.Method,
-			r.URL.Path,
-			rec.status,
-			rec.size,
-			latency,
-			r.RemoteAddr,
-			r.UserAgent(),
+		slog.LogAttrs(
+			r.Context(),
+			slog.LevelInfo,
+			"[Request Log]",
+			slog.String("requestId", rid),
+			slog.String("method", r.Method),
+			slog.String("path", r.URL.Path),
+			slog.Int("status", rec.status),
+			slog.Int("size", rec.size),
+			slog.String("duration", latency.String()),
+			slog.String("remote", r.RemoteAddr),
+			slog.String("userAgent", r.UserAgent()),
 		)
 	})
 }
