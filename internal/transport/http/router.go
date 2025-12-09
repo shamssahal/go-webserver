@@ -19,12 +19,12 @@ func NewHandler() http.Handler {
 
 	// health mux with no middleware overheads
 	healthMux := http.NewServeMux()
-	healthMux.HandleFunc("/health", handlers.HealthCheck)
-	healthMux.HandleFunc("/ready", handlers.ReadinessCheck)
+	healthMux.HandleFunc("GET /health", handlers.HealthCheck)
+	healthMux.HandleFunc("GET /ready", handlers.ReadinessCheck)
 
 	// app mux with routes & middlewares
 	appMux := http.NewServeMux()
-	appMux.HandleFunc("/do", handlers.HandleDo)
+	appMux.HandleFunc("GET /do", handlers.HandleDo)
 	app := Chain(
 		appMux,
 		middleware.CORS,
