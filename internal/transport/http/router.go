@@ -16,6 +16,12 @@ func Chain(h http.Handler, mws ...func(http.Handler) http.Handler) http.Handler 
 
 func NewHandler() http.Handler {
 	mux := http.NewServeMux()
+
+	// Health checks (no middleware needed - must be fast)
+	mux.HandleFunc("/health", handlers.HealthCheck)
+	mux.HandleFunc("/ready", handlers.ReadinessCheck)
+
+	// Application routes
 	mux.HandleFunc("/do", handlers.HandleDo)
 
 	// Apply global middleware
