@@ -1,0 +1,42 @@
+# Build artifacts
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test files
+*.test
+*.out
+coverage.*
+
+# Dependencies
+vendor/
+
+# Environment files (security - don't copy to image)
+.env
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.iml
+
+# Documentation
+*.md
+README.md
+
+# CI/CD
+.github/
+
+# macOS
+.DS_Store
+
+# Misc
+Makefile
