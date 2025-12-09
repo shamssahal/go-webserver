@@ -4,15 +4,15 @@ A production-ready HTTP server boilerplate built with Go, featuring structured l
 
 ## Features
 
-- ✅ Structured JSON logging with `log/slog`
-- ✅ Request tracing with `X-Request-ID`
-- ✅ Health and readiness endpoints
-- ✅ Graceful shutdown
-- ✅ CORS support
-- ✅ Panic recovery with stack traces
-- ✅ Request timeout middleware
-- ✅ Environment-based configuration
-- ✅ Docker support with multi-stage builds
+- Structured JSON logging with `log/slog`
+- Request tracing with `X-Request-ID`
+- Health and readiness endpoints
+- Graceful shutdown
+- CORS support
+- Panic recovery with stack traces
+- Request timeout middleware
+- Environment-based configuration
+- Docker support with multi-stage builds
 
 ## Quick Start
 
