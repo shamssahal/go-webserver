@@ -1,0 +1,29 @@
+# Build output
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Tests/coverage
+*.test
+*.out
+coverage.*
+
+# Dependencies
+vendor/
+
+# Logs and env
+*.log
+.env
+
+# IDE/editor
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
